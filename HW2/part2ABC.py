@@ -113,7 +113,11 @@ def PartC():
     encrypted=encryptMessage(i, plaintext)
     print("key:")
     print(i)
+    print("var")
     print(PartB(encrypted))
+    
+    print(encrypted)
+   # print(PartB(encrypted))
   return "done"
     
     
