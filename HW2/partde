@@ -1,1 +1,153 @@
 
+# Caesar Cipher
+# Reference:
+# http://inventwithpython.com/hacking (BSD Licensed)
+
+# import pyperclip
+
+# the string to be encrypted/decrypted
+# copy the origincal message here with even or odd 
+message = 'ethicslawanduniversitypoliciestodefendasystemyouneedt'\
+			'obeabletothinklikeanattackerandthatincludesunderstand'\
+			'ingtechniquesthatcanbeusedtocompromisesecurityhowever'\
+			'usingthosetechniquesintherealworldmayviolatethelawort'\
+			'heuniversitysrulesanditmaybeunethicalundersomecircums'\
+			'tancesevenprobingforweaknessesmayresultinseverepenalt'\
+			'iesuptoandincludingexpulsioncivilfinesandjailtimeourp'\
+			'olicyineecsisthatyoumustrespecttheprivacyandpropertyr'\
+			'ightsofothersatalltimesorelseyouwillfailthecourseacti'\
+			'nglawfullyandethicallyisyourresponsibilitycarefullyre'\
+			'adthecomputerfraudandabuseactcfaaafederalstatutethatb'\
+			'roadlycriminalizescomputerintrusionthisisoneofseveral'\
+			'lawsthatgovernhackingunderstandwhatthelawprohibitsyou'\
+			'dontwanttoenduplikethisguyifindoubtwecanreferyoutoana'\
+			'ttorneypleasereviewitsspoliciesonresponsibleuseoftech'\
+			'nologyresourcesandcaenspolicydocumentsforguidelinesco'\
+			'ncerningproperuseofinformationtechnologyatumaswellast'\
+			'heengineeringhonorcodeasmembersoftheuniversitycommuni'\
+			'tyyouarerequiredtoabidebyt';
+
+# the encryption/decryption key
+# customize key
+LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+frequency = { 'A': 0, 'B': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0, 'G': 0, 'H': 0, 
+					'I': 0, 'J': 0, 'K': 0, 'L': 0, 'M': 0, 'N': 0, 'O': 0, 'P': 0, 
+					'Q': 0, 'R': 0, 'S': 0, 'T': 0, 'U': 0, 'V': 0, 'W': 0, 'X': 0, 
+					'Y': 0, 'Z': 0 };
+
+
+
+# every possible symbol that can be encrypted
+LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+# stores the encrypted/decrypted form of the message
+
+
+def CaesarCipher(text,k):
+  count=0
+  translated = ''
+  message = text.upper()
+    
+  key_temp=LETTERS.find(k)
+  
+  for symbol in message:
+    num = LETTERS.find(symbol)
+    num= num+key_temp
+      
+    if num >= len(LETTERS):
+       num = num - len(LETTERS)
+    elif num < 0:
+      num = num + len(LETTERS)
+        
+        
+    translated = translated + LETTERS[num]
+   
+
+  return translated 
+  
+        
+
+def PartB(massage):
+  
+  for l in LETTERS:
+    
+    c=massage.count(l)
+    
+    frequency[l] = c/len(massage)
+    frequency[l]= frequency[l]*100
+
+  var=var_calculator(frequency)
+  return var
+  
+  
+
+#var calculator function
+def var_calculator(frq):
+  even=0.0
+  odd=0.0
+  for i in LETTERS:
+    temp=LETTERS.index(i)
+    if temp%2==0:
+      
+       even=even+frq[i]
+    else:
+       odd =odd+frq[i]
+  
+  
+ 
+      
+   
+  even=even/13
+  odd=odd/13
+ 
+ 
+    ###find var###
+  var_even= 0.0
+  var_odd=0.0
+  
+  for i in LETTERS:
+    temp=LETTERS.index(i)
+    if temp%2==0:
+       var_even = var_even + (frq[i] -even)**2
+    else:
+       var_odd= var_odd + (frq[i] -odd)**2
+    
+  	
+
+  var = (var_even+odd)/2
+
+  return var
+
+
+
+def obaid(massage,key):
+  text=''
+  mean=0.0
+  
+  
+  if len(key)>0:
+    text=CaesarCipher(massage,key[0])
+    for i in range(1,len(key)):
+      text=CaesarCipher(text,key[i])
+      mean =mean+PartB(text)
+  else:
+    text=CaesarCipher(massage,key[0])
+    mean =mean+PartB(text)
+    
+    
+  print(mean/len(key))
+  
+
+# yz, xyz, wxyz, vwxyz, uvwxyz
+keywod = 'yz'
+
+print(obaid(message,'yz'))
+print(obaid(message,'xyz'))
+print(obaid(message,'wxyz'))
+print(obaid(message,'vwxyz'))
+print(obaid(message,'uvwxyzyz'))
+
+
+
+
+
